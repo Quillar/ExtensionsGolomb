@@ -1,4 +1,5 @@
 import copy
+import numpy as np
 
 #visited is a set(), graph is a dictionary {:[]}, node is a node name. 
 #this will work to see what nodes can be reached
@@ -219,9 +220,9 @@ def edges(vert, h):
 ##########################################
 
 #List of vertices with the monomials they represent
-test1 =  mon({},[0]*3,4,3,0)
+test1 =  mon({},[0]*5,2,5,0)
 #List of graphs needed and list of principal edges and related edges
-test = edges(test1,4)
+test = edges(test1,2)
 
 # #Testing of the graph
 # print(test1)
@@ -274,7 +275,8 @@ final = []
 #Testing of the initial acyclic orientations
 final2 = []
 #Checks each acyclic orientation
-for g in answer:
+for gg in answer:
+    g=copy.deepcopy(gg)
     #Assumes first it is acyclic
     acy = True
     #Testing that the initial directed graph is acyclic
@@ -308,6 +310,58 @@ for g in answer:
 # print('----------------------')
 print('Acyclic orientations with all edges:',len(final))
 print('------------------------------------------------')
+# A in farkas lemma variant
+
+#Difference of two monomials. Used for the matrix of the principal edges. 
+def difMon(init, fi):
+    inM = test1[init]
+    fiM = test1[fi]
+    out = [0]*len(inM)
+    for i in range(len(inM)):
+        out[i] = inM[i]-fiM[i]
+    return out
+
+# matrices = []
+
+# for curr in final:
+#     A = np.zeros((len(test[3])+len(test1[1]),len(test1[1])))
+#     i=0
+#     while i < len(test1[1]):
+#         A[i][i] = 1
+#         i+=1
+#     for ed in test[3]:
+#         if ed[0] in curr[ed[1]]:
+#             A[i]=difMon(ed[0], ed[1])
+#         else:
+#             A[i]=difMon(ed[1], ed[0])
+#         i+=1
+#     matrices.append(A)
+#     print('-----------------')
+#     print(np.transpose(A))
+#     B = np.zeros(len(A))
+#     for i in range(len(A)):
+#         B[i] = np.sum(A[i])
+#     print('1+2+3:', B)
+#     B = np.zeros(len(A))
+#     for i in range(len(A)):
+#         B[i] = A[i][0]+A[i][1]
+#     print('1+2:', B)
+#     B = np.zeros(len(A))
+#     for i in range(len(A)):
+#         B[i] = A[i][0]+A[i][2]
+#     print('1+3:', B)
+#     B = np.zeros(len(A))
+#     for i in range(len(A)):
+#         B[i] = A[i][1]+A[i][2]
+#     print('2+3:', B)
+
+
+
+
+
+
+
+
 
 
 
